@@ -21,13 +21,16 @@
 
 - name: Install PostgreSQL packages
   apt:
-    name: postgresql-9.5
+    name: "{{ item }}"
     state: present
+  with_items:
+    - postgresql-14
+    - postgresql-client-14
 
 - name: Configure PostgreSQL
-  file:
+  copy:
     src: "{{ item }}"
-    dest: /etc/postgresql/9.5/main/{{ item }}
+    dest: /etc/postgresql/14/main/{{ item }}
   with_items:
     - pg_hba.conf
     - postgresql.conf
