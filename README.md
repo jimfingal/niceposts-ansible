@@ -8,7 +8,7 @@ Use these [Ansible](https://www.ansible.com) playbooks to go from bare metal to 
 
 ### Before you start
 
-The playbooks configure a Ubuntu 16.04 server. It may be compatible with newer versions. They certainly won't be compatible with other distros, except perhaps Debian (which isn't tested).
+The playbooks configure a Ubuntu 22.04 server. It may be compatible with newer versions. They certainly won't be compatible with other distros, except perhaps Debian (which isn't tested).
 
 `first_run.yml` assumes you can SSH into your server as root using publickey authentication. This is normal on Digital Ocean when you create a new server.
 
