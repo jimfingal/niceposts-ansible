@@ -4,8 +4,8 @@
   user: root
 
   tasks:
-    - name: Install Python 2 if needed
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    - name: Install Python 3 if needed
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python3-minimal)
       register: install_python
       changed_when: "'Setting up python' in install_python.stdout"
 
@@ -16,6 +16,7 @@
         comment: "{{ admin_realname }}"
         password: "{{ ansible_become_pass | password_hash('sha512') }}"
         append: yes
+        shell: /bin/bash
         groups:
           sudo
 
@@ -23,7 +24,7 @@
       authorized_key:
         user: "{{ admin_username }}"
         state: present
-        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+        key: "{{ lookup('file', admin_keypath) }}"
 
     - name: Disable root SSH
       replace:
