@@ -12,7 +12,7 @@
   get_url:
     url: https://raw.githubusercontent.com/ZZROTDesign/docker-clean/v2.0.4/docker-clean
     dest: /usr/local/bin/docker-clean
-    sha256sum: 7647330dd1f390009406e4dcd53b12a7e0870e36c36dba202968faea36235016
+    checksum: sha256:7647330dd1f390009406e4dcd53b12a7e0870e36c36dba202968faea36235016
     mode: 0755
 
 - name: Add the Docker CE key
@@ -21,7 +21,7 @@
 
 - name: Add the Docker CE repo
   apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    repo: deb https://download.docker.com/linux/ubuntu {{ ubuntu_distribution_release }} stable
 
 - name: Install Docker CE
   apt:
@@ -29,7 +29,7 @@
 
 - name: Install newer docker-compose than is in the Ubuntu repo
   get_url:
-    url: https://github.com/docker/compose/releases/download/1.11.2/docker-compose-Linux-x86_64
+    url: https://github.com/docker/compose/releases/download/v2.12.2/docker-compose-linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: 0755
 
@@ -50,6 +50,7 @@
     comment: "Mastodon"
     generate_ssh_key: yes
     ssh_key_comment: "{{ mastodon_user }}@{{ ansible_host }}"
+    shell: /bin/bash
 
 - name: Add mastodon group to www-data
   user:
@@ -87,6 +88,11 @@
   file:
     path: "{{ mastodon_public }}/system"
     state: directory
+
+- name: Install env production file
+  copy:
+    src: .env.production
+    dest: "{{ mastodon_private }}/.env.production"
 
 - name: Build Mastodon
   shell: docker-compose build
