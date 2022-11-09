@@ -1,0 +1,10 @@
+---
+- name: Clone bash-it git repo
+  git:
+    dest: "~/.bash_it"
+    repo: "https://github.com/Bash-it/bash-it.git"
+    version: "master"
+  register: git_clone
+
+- name: Install bash-it
+  shell: ~/.bash_it/install.sh --silent

@@ -1,0 +1,6 @@
+---
+- hosts: mastodon
+  user: admin
+
+  roles:
+    - devtools
